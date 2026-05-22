@@ -190,17 +190,17 @@ app.put('/books/:id', async (req, res) => {
 
 
 // for delete
-app.delete('/books/:booksId', verifyToken, async (req, res) => {
-  const { booksId } = req.params;
+app.delete('/booking/:bookingId', verifyToken, async (req, res) => {
+  const { bookingId } = req.params;
 
-  if (!ObjectId.isValid(booksId)) {
-    return res.status(400).send({ message: 'Invalid Book ID' });
+  if (!ObjectId.isValid(bookingId)) {
+    return res.status(400).send({ message: 'Invalid Booking ID' });
   }
 
   try {
-  
+
     const booking = await bookingsCollection.findOne({
-      bookId: booksId
+      _id: new ObjectId(bookingId)
     });
 
     if (!booking) {
@@ -210,12 +210,11 @@ app.delete('/books/:booksId', verifyToken, async (req, res) => {
     }
 
     const result = await bookingsCollection.deleteOne({
-      bookId: booksId
+      _id: new ObjectId(bookingId)
     });
 
-  
     await booksCollection.updateOne(
-      { _id: new ObjectId(booksId) },
+      { _id: new ObjectId(booking.bookId) },
       { $inc: { enrollCount: -1 } }
     );
 
