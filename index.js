@@ -60,6 +60,7 @@ const verifyToken = async (req, res, next) => {
 const database = client.db('study-nook')
 const booksCollection = database.collection('books')
 const bookingsCollection = database.collection('bookings')
+const bookedCollection = database.collection('booked')
 async function run() {
   try {
     
@@ -168,14 +169,14 @@ async function run() {
 
 });
 
-app.post('/books',  async (req, res) => {
+app.post('/booked',  async (req, res) => {
   const bookData = req.body;
-  const result = await booksCollection.insertOne(bookData);
+  const result = await bookedCollection.insertOne(bookData);
   res.send(result);
 })
 
-app.get('/books', async (req, res) => {
-  const cursor = booksCollection.find();
+app.get('/booked',  async (req, res) => {
+  const cursor = bookedCollection.find();
   const result = await cursor.toArray();
   res.send(result);
 });
