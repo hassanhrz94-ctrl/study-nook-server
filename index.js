@@ -64,7 +64,7 @@ const bookedCollection = database.collection('booked')
 async function run() {
   try {
     
-    await client.connect();
+    // await client.connect();
    
 
     // books api and search api
