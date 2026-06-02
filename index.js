@@ -40,7 +40,7 @@ const verifyToken = async (req, res, next) => {
   const { authorization } = req.headers;
     console.log(req.headers, 'from verify token');
   const token = authorization?.split(' ')[1];
-  //   console.log(token);
+    console.log(token);
 
   if (!token) {
     return res.status(401).json({ message: 'Unauthorize' });
